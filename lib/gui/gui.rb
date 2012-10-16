@@ -15,7 +15,7 @@ class Gui < FXMainWindow
   protected
 
   #create FXFont object
-  def _create_font(face = 'Helvetica',size = 200,weight = FONTWEIGHT_NORMAL)
+  def _createFont(face = 'Helvetica',size = 200,weight = FONTWEIGHT_NORMAL)
     f = FXFontDesc.new()
     f.encoding = FONTENCODING_DEFAULT
     f.face = face
@@ -29,41 +29,45 @@ class Gui < FXMainWindow
   end
 
   #create FX widgets
-  def _prepare_layout
+  def _prepareLayout
     @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => HORIZAONTAL_FRAME_DEFAULT_HEIGHT)
       @hFrame1Label = FXLabel.new(@hFrame1,"Task:")
-        @hFrame1Label.font = FXFont.new(getApp(),_create_font())
+        @hFrame1Label.font = FXFont.new(getApp(),_createFont())
       @hFrame1TextField = FXTextField.new(@hFrame1,30, :opts => LAYOUT_FILL)
     @vFrame1 = FXVerticalFrame.new(self, :opts => LAYOUT_FILL)
       @hFrame2 = FXHorizontalFrame.new(@vFrame1)
-        @generateButton = FXButton.new(@hFrame2, "Start timer")
+        @counterButton = FXButton.new(@hFrame2, "Start timer")
         @settingButton = FXButton.new(@hFrame2, "Settings")
-        @counterLabel = FXLabel.new(@hFrame2,Time.at("#{@i}".to_i).gmtime.strftime('%R:%S'))
+        @counterLabel = FXLabel.new(@hFrame2,formatTime(@counterValue))
         @counterLabel.hide
   end
 
   #create events
-  def _prepare_events
-    @generateButton.connect(SEL_COMMAND) do |sender, selector, data|
+  def _prepareEvents
+    @counterButton.connect(SEL_COMMAND) do |sender, selector, data|
       @counterLabel.show
       @counterLabel.recalc
-      getApp().addTimeout(1000, method(:onTimeout))
+      getApp().addTimeout(1000, method(:_onTimerButtonClick))
     end
+  end
+
+  def _onTimerButtonClick(sender, sel, ptr)
+    @counterValue += 1
+    @counterLabel.text = formatTime(@counterValue)
+    getApp().addTimeout(1000, method(:_onTimerButtonClick))
   end
 
   public
   # construct the FX app
   def initialize(app)
     super(app, "Ftt YO", :width => APP_DEFAULT_WIDTH, :height => APP_DEFAULT_HEIGHT)
-    @i = 1
-    _prepare_layout()
-    _prepare_events()
+    @counterValue = 1
+    _prepareLayout
+    _prepareEvents
   end
 
-  def onTimeout(sender, sel, ptr)
-    puts @i += 1
-    @counterLabel.text = Time.at("#{@i}".to_i).gmtime.strftime('%R:%S')
-    getApp().addTimeout(1000, method(:onTimeout))
+  def formatTime(seconds)
+    Time.at("#{seconds}".to_i).gmtime.strftime('%R:%S')
   end
 
   #create (display) the FX app
