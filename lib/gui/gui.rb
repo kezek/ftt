@@ -4,7 +4,6 @@ include Fox
 # Main Gui bootstrap
 # Author: Andrei
 # TODO : refactoring !
-# TODO : bug if you click twice really fast on the timer button
 
 class Gui < FXMainWindow
   #class constants
@@ -33,7 +32,7 @@ class Gui < FXMainWindow
   def _prepareLayout
     @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => HORIZAONTAL_FRAME_DEFAULT_HEIGHT)
       @hFrame1Label = FXLabel.new(@hFrame1,"Task:")
-        @hFrame1Label.font = FXFont.new(getApp(),_createFont())
+        @hFrame1Label.font = FXFont.new(@app,_createFont())
       @hFrame1TextField = FXTextField.new(@hFrame1,30, :opts => LAYOUT_FILL)
     @vFrame1 = FXVerticalFrame.new(self, :opts => LAYOUT_FILL)
       @hFrame2 = FXHorizontalFrame.new(@vFrame1)
@@ -52,12 +51,14 @@ class Gui < FXMainWindow
       @counterButtonState = !@counterButtonState
       @counterLabel.show
       @counterLabel.recalc
+      #if the button state is active AKA we start the timer
       if @counterButtonState
-        getApp().addTimeout(1000, method(:_onTimerButtonClick))
+        @counterButtonTimeout = @app.addTimeout(1000, method(:_onTimerButtonClick))
         @counterButton.text = 'Stop Timer'
+      #else the button state is inactive AKA we stop the timer
       else
-        if getApp().hasTimeout?(@counterButtonTimeout)
-          getApp().removeTimeout(@counterButtonTimeout)
+        if app.hasTimeout?(@counterButtonTimeout)
+          @app.removeTimeout(@counterButtonTimeout)
           @counterButton.text = 'Start Timer'
         end
       end
@@ -67,7 +68,7 @@ class Gui < FXMainWindow
   def _onTimerButtonClick(sender, sel, ptr)
     @counterValue += 1
     @counterLabel.text = formatTime(@counterValue)
-    @counterButtonTimeout = getApp().addTimeout(1000, method(:_onTimerButtonClick))
+    @counterButtonTimeout = @app.addTimeout(1000, method(:_onTimerButtonClick))
   end
 
   public
@@ -75,6 +76,7 @@ class Gui < FXMainWindow
   def initialize(app)
     super(app, "Ftt YO", :width => APP_DEFAULT_WIDTH, :height => APP_DEFAULT_HEIGHT)
     @counterValue = 1
+    @app = getApp
     _prepareLayout
     _prepareEvents
   end
