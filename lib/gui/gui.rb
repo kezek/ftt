@@ -4,6 +4,7 @@ include Fox
 # Main Gui bootstrap
 # Author: Andrei
 # TODO : refactoring !
+# TODO : bug if you click twice really fast on the timer button
 
 class Gui < FXMainWindow
   #class constants
@@ -44,17 +45,29 @@ class Gui < FXMainWindow
 
   #create events
   def _prepareEvents
-    @counterButton.connect(SEL_COMMAND) do |sender, selector, data|
+    @counterButtonState = false
+
+    @counterButton.connect(SEL_COMMAND) do
+      #toggle button state (if enabled or not)
+      @counterButtonState = !@counterButtonState
       @counterLabel.show
       @counterLabel.recalc
-      getApp().addTimeout(1000, method(:_onTimerButtonClick))
+      if @counterButtonState
+        getApp().addTimeout(1000, method(:_onTimerButtonClick))
+        @counterButton.text = 'Stop Timer'
+      else
+        if getApp().hasTimeout?(@counterButtonTimeout)
+          getApp().removeTimeout(@counterButtonTimeout)
+          @counterButton.text = 'Start Timer'
+        end
+      end
     end
   end
 
   def _onTimerButtonClick(sender, sel, ptr)
     @counterValue += 1
     @counterLabel.text = formatTime(@counterValue)
-    getApp().addTimeout(1000, method(:_onTimerButtonClick))
+    @counterButtonTimeout = getApp().addTimeout(1000, method(:_onTimerButtonClick))
   end
 
   public
