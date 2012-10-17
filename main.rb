@@ -1,4 +1,4 @@
-require './lib/gui/gui.rb'
+require './lib/ftt/gui/gui.rb'
 
 if __FILE__ == $0
   FXApp.new do |app|
