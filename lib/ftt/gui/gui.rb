@@ -2,6 +2,7 @@ require 'fox16'
 require_relative '../config'
 require_relative './settings'
 require_relative './messages'
+require_relative '../gd'
 include Fox
 
 # Main Gui bootstrap
@@ -72,18 +73,30 @@ class Gui < FXMainWindow
     if Ftt::Config.instance.configured? == false
       response = @firstTimeMessage.execute
       if response == 1
-        response = @settingsDialog.execute
-        data = Hash.new
-        data['gusername'] = @settingsDialog.GUsername.text
-        data['gpassword'] = @settingsDialog.GPassword.text
-        Ftt::Config.instance.saveConfiguration(data)
+        _displaySettingDialog
       end
     end
+  end
+
+  def _displaySettingDialog
+    response = @settingsDialog.execute
+    data = Hash.new
+    data['gusername'] = @settingsDialog.GUsername.text
+    data['gpassword'] = @settingsDialog.GPassword.text
+    Ftt::Config.instance.saveConfiguration(data)
+    begin
+      Ftt::GD.login
+    rescue
+      @GDConnectError.execute
+      _displaySettingDialog
+    end
+
   end
 
   #prepare messages
   def _prepareDialogs
     @firstTimeMessage = FirstTime.new(self)
+    @GDConnectError = GoogleDriveConnectError.new(self)
     #create the setting dialog and hide it initially
     @settingsDialog = Settings.new(self)
   end

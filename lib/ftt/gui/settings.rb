@@ -3,7 +3,7 @@ include Fox
 
 class Settings < FXDialogBox
 
-  attr_reader :GUsername,:GPassword
+  attr_reader :GUsername,:GPassword,:hFrame3
 
   def initialize(owner)
     # Invoke base class initialize function first
@@ -15,8 +15,8 @@ class Settings < FXDialogBox
       hFrame2Label = FXLabel.new(hFrame2,"Google account password:")
       @GPassword = FXTextField.new(hFrame2,30, :opts => LAYOUT_FILL|TEXTFIELD_PASSWD)
     FXHorizontalSeparator.new(self, SEPARATOR_GROOVE)
-    hFrame3 = FXHorizontalFrame.new(self)
-      FXButton.new(hFrame3, "&Accept", nil, self, ID_ACCEPT,
+    @hFrame3 = FXHorizontalFrame.new(self)
+      FXButton.new(hFrame3, "Accept", nil, self, ID_ACCEPT,
       FRAME_RAISED|FRAME_THICK|LAYOUT_RIGHT|LAYOUT_CENTER_Y)
   end
 end

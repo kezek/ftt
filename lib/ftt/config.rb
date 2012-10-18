@@ -24,12 +24,20 @@ module Ftt
 
     def saveConfiguration(data)
       if !data.empty?
-        puts data["gusername"]
-        Db.instance.execute("create table if not exists #{CONFIG_TABLE} (key TEXT UNIQUE, value TEXT)")
-        Db.instance.execute("INSERT OR REPLACE INTO config values ( ?, ? )", 'gusername', data["gusername"].encode('UTF-8'))
+        Db.instance.execute("CREATE table if not exists #{CONFIG_TABLE} (key TEXT UNIQUE, value TEXT)")
         Db.instance.execute("INSERT OR REPLACE INTO config values ( ?, ? )",
-                            'gpassword', Digest::MD5.hexdigest(data["gpassword"]).encode('UTF-8'))
+                            'gusername', data["gusername"].encode('UTF-8'))
+        Db.instance.execute("INSERT OR REPLACE INTO config values ( ?, ? )",
+                            'gpassword', data["gpassword"].encode('UTF-8'))
       end
+    end
+
+    def getGUsername
+      Db.instance.get_first_value("SELECT value FROM config WHERE key = 'gusername'")
+    end
+
+    def getGPassword
+      Db.instance.get_first_value("SELECT value FROM config WHERE key = 'gpassword'")
     end
   end
 end
