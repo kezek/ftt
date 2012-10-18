@@ -72,9 +72,12 @@ class Gui < FXMainWindow
     if Ftt::Config.instance.configured? == false
       response = @firstTimeMessage.execute
       if response == 1
-        @settingsDialog.execute
+        response = @settingsDialog.execute
+        data = Hash.new
+        data['gusername'] = @settingsDialog.GUsername.text
+        data['gpassword'] = @settingsDialog.GPassword.text
+        Ftt::Config.instance.saveConfiguration(data)
       end
-
     end
   end
 
