@@ -1,5 +1,7 @@
 require 'fox16'
 require_relative '../config'
+require_relative './settings'
+require_relative './messages'
 include Fox
 
 # Main Gui bootstrap
@@ -46,8 +48,8 @@ class Gui < FXMainWindow
 
   #create events
   def _prepareEvents
+    #counter related logic
     @counterButtonState = false
-
     @counterButton.connect(SEL_COMMAND) do
       #toggle button state (if enabled or not)
       @counterButtonState = !@counterButtonState
@@ -65,6 +67,22 @@ class Gui < FXMainWindow
         end
       end
     end
+
+    #setting dialog
+    if Ftt::Config.instance.configured? == false
+      response = @firstTimeMessage.execute
+      if response == 1
+        @settingsDialog.execute
+      end
+
+    end
+  end
+
+  #prepare messages
+  def _prepareDialogs
+    @firstTimeMessage = FirstTime.new(self)
+    #create the setting dialog and hide it initially
+    @settingsDialog = Settings.new(self)
   end
 
   def _onTimerButtonClick(sender, sel, ptr)
@@ -80,7 +98,7 @@ class Gui < FXMainWindow
     @counterValue = 1
     @app = getApp
     _prepareLayout
-    _prepareEvents
+
   end
 
   def formatTime(seconds)
@@ -90,6 +108,8 @@ class Gui < FXMainWindow
   #create (display) the FX app
   def create
     super
+    _prepareDialogs
+    _prepareEvents
     show(PLACEMENT_SCREEN)
   end
 end

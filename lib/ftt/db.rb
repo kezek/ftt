@@ -4,8 +4,6 @@ require 'sqlite3'
 module Db
   DB_PATH = File.expand_path("../../../data/ftt.db", __FILE__)
 
-
-
   public
   def initialize
     Db.connect
