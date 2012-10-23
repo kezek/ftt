@@ -45,8 +45,8 @@ module Ftt
       Db.instance.get_first_value("SELECT value FROM config WHERE key = 'gpassword'")
     end
 
-    def getSpreadsheetKey
-      #Db.instance.get_first_value("SELECT value FROM config WHERE key = 'gpassword'")
+    def getGSpreadsheetKey
+      Db.instance.get_first_value("SELECT value FROM config WHERE key = 'gspreadsheetkey'")
     end
   end
 end
