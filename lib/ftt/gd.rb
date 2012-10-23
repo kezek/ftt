@@ -5,7 +5,11 @@ module Ftt
     def self.login
       gusername = Ftt::Config.instance.getGUsername
       gpassword = Ftt::Config.instance.getGPassword
-      GoogleDrive.login(gusername,gpassword)
+      @session = GoogleDrive.login(gusername,gpassword)
+    end
+
+    def self.getSpreadsheet
+      @session.spreadsheet_by_key(Ftt::Config.instance.getSpreadSheetKey)
     end
   end
 end

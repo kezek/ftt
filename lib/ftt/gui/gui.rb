@@ -83,6 +83,7 @@ class Gui < FXMainWindow
     data = Hash.new
     data['gusername'] = @settingsDialog.GUsername.text
     data['gpassword'] = @settingsDialog.GPassword.text
+    data['gspreadsheetkey'] = @settingsDialog.GSpreadsheetKey.text
     Ftt::Config.instance.saveConfiguration(data)
     begin
       Ftt::GD.login
