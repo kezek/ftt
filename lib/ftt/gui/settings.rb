@@ -34,10 +34,12 @@ class Settings < FXDialogBox
           @GPassword.text = gPasswordConfigValue
         end
 
-        #render the field
+        # render the field
         @GSpreadsheetKey = FXTextField.new(vFrame2, 45,
           :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
+        # fetch config value
         gSpreadsheetKeyConfigValue = Ftt::Config.instance.getGSpreadsheetKey
+        # display config value unless empty or nil
         unless gSpreadsheetKeyConfigValue.nil? or gSpreadsheetKeyConfigValue == ' ' or gSpreadsheetKeyConfigValue.empty?
           @GSpreadsheetKey.text = gSpreadsheetKeyConfigValue
         end

@@ -72,11 +72,12 @@ class Gui < FXMainWindow
     #setting dialog
     if Ftt::Config.instance.configured? == false
       response = @firstTimeMessage.execute
+      # if clicked on Yes on @firstTimeMessage
       if response == 1
         _displaySettingDialog
       end
     end
-
+    # display setting dialog when clicking on the Setting Button
     @settingsButton.connect(SEL_COMMAND) do
       _displaySettingDialog
     end
@@ -91,6 +92,12 @@ class Gui < FXMainWindow
     Ftt::Config.instance.saveConfiguration(data)
     begin
       Ftt::GD.login
+      begin
+        Ftt::GD.getSpreadsheet
+      rescue
+        @GDSpreadsheetError.execute
+        _displaySettingDialog
+      end
     rescue
       @GDConnectError.execute
       _displaySettingDialog
@@ -102,6 +109,7 @@ class Gui < FXMainWindow
   def _prepareDialogs
     @firstTimeMessage = FirstTime.new(self)
     @GDConnectError = GoogleDriveConnectError.new(self)
+    @GDSpreadsheetError = GoogleDriveInvalidSpreadsheet.new(self)
     #create the setting dialog and hide it initially
     @settingsDialog = Settings.new(self)
   end

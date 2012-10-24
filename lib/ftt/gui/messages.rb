@@ -12,3 +12,9 @@ class GoogleDriveConnectError < FXMessageBox
     super(owner, "Warning", "Could not connect to Google Drive. Try again.",nil,MBOX_OK)
   end
 end
+
+class GoogleDriveInvalidSpreadsheet < FXMessageBox
+  def initialize(owner)
+    super(owner, "Warning", "Could not connect to Google Drive. Try again.",nil,MBOX_OK)
+  end
+end
