@@ -21,7 +21,9 @@ class Settings < FXDialogBox
         @GSpreadsheetKey = FXTextField.new(vFrame2, 45,
           :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
       hFrame2 = FXHorizontalFrame.new(self)
-        FXButton.new(hFrame2, "Accept", nil, self, ID_ACCEPT,
+        acceptButton = FXButton.new(hFrame2, "Accept", nil, self, ID_ACCEPT,
           FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_Y)
+        acceptButton.setDefault
+        acceptButton.setFocus
   end
 end
