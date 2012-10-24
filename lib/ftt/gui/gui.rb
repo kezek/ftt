@@ -42,7 +42,7 @@ class Gui < FXMainWindow
     @vFrame1 = FXVerticalFrame.new(self, :opts => LAYOUT_FILL)
       @hFrame2 = FXHorizontalFrame.new(@vFrame1)
         @counterButton = FXButton.new(@hFrame2, "Start timer")
-        @settingButton = FXButton.new(@hFrame2, "Settings")
+        @settingsButton = FXButton.new(@hFrame2, "Settings")
         @counterLabel = FXLabel.new(@hFrame2,formatTime(@counterValue))
         @counterLabel.hide
   end
@@ -75,6 +75,10 @@ class Gui < FXMainWindow
       if response == 1
         _displaySettingDialog
       end
+    end
+
+    @settingsButton.connect(SEL_COMMAND) do
+      _displaySettingDialog
     end
   end
 
