@@ -9,6 +9,7 @@ module Ftt
         @@session = GoogleDrive.login(gusername,gpassword)
       rescue => e
         Ftt::Config.instance.logger.error(e.message)
+        raise e
       end
     end
 
@@ -17,6 +18,7 @@ module Ftt
         @@spreadsheet = @@session.spreadsheet_by_key(Ftt::Config.instance.getGSpreadsheetKey)
       rescue => e
         Ftt::Config.instance.logger.error(e.message)
+        raise e
       end
     end
 
@@ -25,6 +27,7 @@ module Ftt
         @@worksheet = getSpreadsheet.worksheets[0]
       rescue => e
         Ftt::Config.instance.logger.error(e.message)
+        raise e
       end
     end
   end
