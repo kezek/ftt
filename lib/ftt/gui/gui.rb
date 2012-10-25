@@ -83,6 +83,26 @@ class Gui < FXMainWindow
     end
   end
 
+  # validates current settings and throws message boxes
+  # in case of invalid settings
+  # @return bool
+  def _validateSettings
+    begin
+      Ftt::GD.login
+      begin
+        Ftt::GD.getLatestWorksheet
+      rescue
+        @GDSpreadsheetError.execute
+        return false
+      end
+    rescue
+      @GDConnectError.execute
+      return false
+    end
+
+    return true
+  end
+
   def _displaySettingDialog
     response = @settingsDialog.execute
     data = Hash.new
@@ -90,19 +110,11 @@ class Gui < FXMainWindow
     data['gpassword'] = @settingsDialog.GPassword.text
     data['gspreadsheetkey'] = @settingsDialog.GSpreadsheetKey.text
     Ftt::Config.instance.saveConfiguration(data)
-    begin
-      Ftt::GD.login
-      begin
-        Ftt::GD.getLatestWorksheet
-      rescue
-        @GDSpreadsheetError.execute
-        _displaySettingDialog
-      end
-    rescue
-      @GDConnectError.execute
+    # while current setings are invalid keep displaying
+    # the Settings Dialog
+    if _validateSettings == false
       _displaySettingDialog
     end
-
   end
 
   #prepare messages
