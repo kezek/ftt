@@ -15,6 +15,6 @@ end
 
 class GoogleDriveInvalidSpreadsheet < FXMessageBox
   def initialize(owner)
-    super(owner, "Warning", "Could not connect to Google Drive. Try again.",nil,MBOX_OK)
+    super(owner, "Warning", "Could not retrieve worksheet. Check the spreadsheet key.",nil,MBOX_OK)
   end
 end

@@ -93,7 +93,7 @@ class Gui < FXMainWindow
     begin
       Ftt::GD.login
       begin
-        Ftt::GD.getSpreadsheet
+        Ftt::GD.getLatestWorksheet
       rescue
         @GDSpreadsheetError.execute
         _displaySettingDialog

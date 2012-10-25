@@ -1,6 +1,7 @@
 require_relative './db'
 require 'singleton'
 require 'digest'
+require 'logger'
 
 # configuration
 module Ftt
@@ -10,9 +11,15 @@ module Ftt
 
     CONFIG_TABLE = 'config'
 
+    attr_reader :logger
+
     public
     def initialize
       puts 'CONFIGURATION'
+      logFilePath = File.expand_path("../../../data/log.txt", __FILE__)
+      file = File.open(logFilePath, File::WRONLY | File::APPEND | File::CREAT)
+      @logger = Logger.new(file)
+      #puts @logger.inspect
       super
     end
 
