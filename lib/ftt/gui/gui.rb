@@ -152,6 +152,9 @@ class Gui < FXMainWindow
     super
     _prepareDialogs
     _prepareEvents
+    if validateSettings == false
+      _displaySettingDialog
+    end
     show(PLACEMENT_SCREEN)
   end
 end
