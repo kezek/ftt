@@ -17,7 +17,6 @@ module Ftt
     end
 
     def configured?
-      return false
       result = Db.instance.get_first_value("SELECT count (*) FROM sqlite_master WHERE type='table' AND name= ?;",CONFIG_TABLE)
       result != 0 ? true : false
     end
