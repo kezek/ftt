@@ -83,26 +83,6 @@ class Gui < FXMainWindow
     end
   end
 
-  # validates current settings and throws message boxes
-  # in case of invalid settings
-  # @return bool
-  def _validateSettings
-    begin
-      Ftt::GD.login
-      begin
-        Ftt::GD.getLatestWorksheet
-      rescue
-        @GDSpreadsheetError.execute
-        return false
-      end
-    rescue
-      @GDConnectError.execute
-      return false
-    end
-
-    return true
-  end
-
   def _displaySettingDialog
     response = @settingsDialog.execute
     data = Hash.new
@@ -112,7 +92,7 @@ class Gui < FXMainWindow
     Ftt::Config.instance.saveConfiguration(data)
     # while current setings are invalid keep displaying
     # the Settings Dialog
-    if _validateSettings == false
+    if validateSettings == false
       _displaySettingDialog
     end
   end
@@ -133,6 +113,27 @@ class Gui < FXMainWindow
   end
 
   public
+
+  # validates current settings and throws message boxes
+  # in case of invalid settings
+  # @return bool
+  def validateSettings
+    begin
+      Ftt::GD.login
+      begin
+        Ftt::GD.getLatestWorksheet
+      rescue
+        @GDSpreadsheetError.execute
+        return false
+      end
+    rescue
+      @GDConnectError.execute
+      return false
+    end
+
+    return true
+  end
+
   # construct the FX app
   def initialize(app)
     super(app, "Ftt YO", :width => APP_DEFAULT_WIDTH, :height => APP_DEFAULT_HEIGHT)
