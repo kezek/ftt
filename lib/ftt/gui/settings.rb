@@ -48,5 +48,6 @@ class Settings < FXDialogBox
           FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_Y)
         acceptButton.setDefault
         acceptButton.setFocus
+        FXLabel.new(hFrame2, "Note : place the current montly worksheet as the first one")
   end
 end
