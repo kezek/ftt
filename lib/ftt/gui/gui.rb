@@ -77,6 +77,11 @@ class Gui < FXMainWindow
         _displaySettingDialog
       end
     end
+
+    if validateSettings == false
+      _displaySettingDialog
+    end
+
     # display setting dialog when clicking on the Setting Button
     @settingsButton.connect(SEL_COMMAND) do
       _displaySettingDialog
@@ -152,9 +157,6 @@ class Gui < FXMainWindow
     super
     _prepareDialogs
     _prepareEvents
-    if validateSettings == false
-      _displaySettingDialog
-    end
     show(PLACEMENT_SCREEN)
   end
 end
