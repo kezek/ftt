@@ -12,6 +12,7 @@ Installation
 - ~~gem install <github.com/downloads/sfeu/wxruby/wxruby-ruby19-2.0.2-x86-linux.gem> (for Ubuntu 12.04+)~~
 - gem install fxruby
 - gem install google_drive
+- gem install sqlite3
 
 ------------
 These guys have been VERY helpful :
