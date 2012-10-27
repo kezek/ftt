@@ -53,7 +53,7 @@ class Settings < FXDialogBox
         @maconomyData = FXDataTarget.new("")
         maconomyBox = FXGroupBox.new(hFrame2, "Maconomy Codes", GROUPBOX_NORMAL|LAYOUT_FILL_X|LAYOUT_FILL_Y|FRAME_GROOVE)
         maconomyFrame = FXHorizontalFrame.new(maconomyBox, FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_X|LAYOUT_FILL_Y)
-        FXText.new(maconomyFrame, @maconomyData, FXDataTarget::ID_VALUE, TEXT_WORDWRAP|LAYOUT_FILL_X|LAYOUT_FILL_Y)
+        FXText.new(maconomyFrame, @maconomyData, FXDataTarget::ID_VALUE, LAYOUT_FILL_X|LAYOUT_FILL_Y|SELECT_LINES|TEXT_SHOWACTIVE|TEXT_AUTOSCROLL)
         
       hFrame3 = FXHorizontalFrame.new(self)
         acceptButton = FXButton.new(hFrame3, "Accept", nil, self, ID_ACCEPT,

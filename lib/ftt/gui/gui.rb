@@ -91,9 +91,12 @@ class Gui < FXMainWindow
   def _displaySettingDialog
     response = @settingsDialog.execute
     data = Hash.new
+    #TODO : use symbols instead of strings
     data['gusername'] = @settingsDialog.GUsername.text
     data['gpassword'] = @settingsDialog.GPassword.text
     data['gspreadsheetkey'] = @settingsDialog.GSpreadsheetKey.text
+    data['maconomy'] = @settingsDialog.maconomyData
+    
     Ftt::Config.instance.saveConfiguration(data)
     # while current setings are invalid keep displaying
     # the Settings Dialog

@@ -2,6 +2,7 @@ require_relative './db'
 require 'singleton'
 require 'digest'
 require 'logger'
+require 'csv'
 
 # configuration
 module Ftt
@@ -10,6 +11,7 @@ module Ftt
     include Singleton
 
     CONFIG_TABLE = 'config'
+    MACONOMY_TABLE = 'maconomy'
 
     attr_reader :logger
 
@@ -38,11 +40,25 @@ module Ftt
           Db.instance.execute("INSERT OR REPLACE INTO config values ( ?, ? )",
                               'gpassword', data["gpassword"].encode('UTF-8'))
 
-          Db.instance.execute("INSERT OR REPLACE INTO config values ( ?, ? )",
+          Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
                               'gspreadsheetkey', data["gspreadsheetkey"].encode('UTF-8'))
+                                
+          Db.instance.execute("CREATE table if not exists #{MACONOMY_TABLE} (pattern TEXT UNIQUE, code TEXT)")
+          data["maconomy"].to_s().each_line do |row|
+            values = row.split(',')
+            #check if there are 2 values
+            if values.count
+              #save pair to maconomy table in db
+              Db.instance.execute("INSERT OR REPLACE INTO #{MACONOMY_TABLE} values ( ?, ? )",
+                                            values.first.encode('UTF-8'),values.last.encode('UTF-8'))
+            end
+          end
+          
         rescue => e
           @logger.error(e.message)
         end
+      else
+        raise 'No input data received'
       end
     end
 
