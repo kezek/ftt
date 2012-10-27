@@ -42,6 +42,7 @@ class Gui < FXMainWindow
     @vFrame1 = FXVerticalFrame.new(self, :opts => LAYOUT_FILL)
       @hFrame2 = FXHorizontalFrame.new(@vFrame1)
         @counterButton = FXButton.new(@hFrame2, "Start timer")
+        @resetButton = FXButton.new(@hFrame2,"Reset timer")
         @settingsButton = FXButton.new(@hFrame2, "Settings")
         @counterLabel = FXLabel.new(@hFrame2,formatTime(@counterValue))
         @counterLabel.hide
@@ -68,6 +69,12 @@ class Gui < FXMainWindow
         end
       end
     end
+    @resetButton.connect(SEL_COMMAND) do
+      @counterValue = 0
+      @counterLabel.text = formatTime(0)
+      @counterLabel.recalc
+    end
+    
 
     #setting dialog
     if Ftt::Config.instance.configured? == false
