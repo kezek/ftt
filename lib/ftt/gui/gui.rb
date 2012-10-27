@@ -95,7 +95,7 @@ class Gui < FXMainWindow
     data['gusername'] = @settingsDialog.GUsername.text
     data['gpassword'] = @settingsDialog.GPassword.text
     data['gspreadsheetkey'] = @settingsDialog.GSpreadsheetKey.text
-    data['maconomy'] = @settingsDialog.maconomyData
+    data['maconomy'] = @settingsDialog.maconomyData.to_s
     
     Ftt::Config.instance.saveConfiguration(data)
     # while current setings are invalid keep displaying

@@ -53,8 +53,15 @@ class Settings < FXDialogBox
         @maconomyData = FXDataTarget.new("")
         maconomyBox = FXGroupBox.new(hFrame2, "Maconomy Codes", GROUPBOX_NORMAL|LAYOUT_FILL_X|LAYOUT_FILL_Y|FRAME_GROOVE)
         maconomyFrame = FXHorizontalFrame.new(maconomyBox, FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_X|LAYOUT_FILL_Y)
+        # display db value if populated 
+        if Ftt::Config.instance.configured? == true
+          maconomyCodes = Ftt::Config.instance.getMaconomyCodesCombined
+          unless maconomyCodes.nil? or maconomyCodes == ' ' or maconomyCodes.empty?
+            @maconomyData.value = maconomyCodes
+          end      
+        end
+        # render element
         FXText.new(maconomyFrame, @maconomyData, FXDataTarget::ID_VALUE, LAYOUT_FILL_X|LAYOUT_FILL_Y|SELECT_LINES|TEXT_SHOWACTIVE|TEXT_AUTOSCROLL)
-        
       hFrame3 = FXHorizontalFrame.new(self)
         acceptButton = FXButton.new(hFrame3, "Accept", nil, self, ID_ACCEPT,
           FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_Y)
