@@ -38,7 +38,7 @@ class Gui < FXMainWindow
     @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => HORIZAONTAL_FRAME_DEFAULT_HEIGHT)
       @hFrame1Label = FXLabel.new(@hFrame1,"Task:")
         @hFrame1Label.font = FXFont.new(@app,_createFont())
-      @hFrame1TextField = FXTextField.new(@hFrame1,30, :opts => LAYOUT_FILL)
+      @taskField = FXTextField.new(@hFrame1,30, :opts => LAYOUT_FILL)
     @vFrame1 = FXVerticalFrame.new(self, :opts => LAYOUT_FILL)
       @hFrame2 = FXHorizontalFrame.new(@vFrame1)
         @counterButton = FXButton.new(@hFrame2, "Start timer")
@@ -96,9 +96,9 @@ class Gui < FXMainWindow
     @settingsButton.connect(SEL_COMMAND) do
       _displaySettingDialog
     end
-    
+    #saveButton
     @saveButton.connect(SEL_COMMAND) do
-      Ftt::GD.save
+      Ftt::GD.save(@taskField.text)
     end
   end
 
