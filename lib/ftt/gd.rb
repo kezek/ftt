@@ -1,4 +1,5 @@
 require "google_drive"
+require 'date'
 
 module Ftt
   class GD
@@ -30,5 +31,17 @@ module Ftt
         raise e
       end
     end
+    
+    # TODO : finish implementation
+    def self.save
+      @@worksheet[1, 1] = "aaaaaa"
+      @@worksheet[1, 2] = "bbbbbb"
+      @@worksheet.save
+    end
+    
+    #fetch current date in format D/M/Y
+    def self.getCurrentDate
+      Date.today.strftime("%d.%m.%Y")
+    end  
   end
 end

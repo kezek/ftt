@@ -10,7 +10,7 @@ include Fox
 # TODO : refactoring !
 
 class Gui < FXMainWindow
-  #include Db
+  
   #class constants
   APP_DEFAULT_WIDTH = 300
   APP_DEFAULT_HEIGHT = 100
@@ -44,6 +44,9 @@ class Gui < FXMainWindow
         @counterButton = FXButton.new(@hFrame2, "Start timer")
         @resetButton = FXButton.new(@hFrame2,"Reset timer")
         @settingsButton = FXButton.new(@hFrame2, "Settings")
+        # TODO finish implementantion
+        @saveButton = FXButton.new(@hFrame2,"Save")
+        # 
         @counterLabel = FXLabel.new(@hFrame2,formatTime(@counterValue))
         @counterLabel.hide
   end
@@ -92,6 +95,10 @@ class Gui < FXMainWindow
     # display setting dialog when clicking on the Setting Button
     @settingsButton.connect(SEL_COMMAND) do
       _displaySettingDialog
+    end
+    
+    @saveButton.connect(SEL_COMMAND) do
+      Ftt::GD.save
     end
   end
 
