@@ -108,5 +108,15 @@ module Ftt
         @logger.error(e.message)
       end
     end
+    
+    # Username is the value the will be used to populate the
+    # 'User' column in the worksheet
+    def getUsername
+      begin
+        Db.instance.get_first_value("SELECT value FROM #{CONFIG_TABLE} WHERE key = 'username'")
+      rescue => e
+        @logger.error(e.message)
+      end
+    end
   end
 end
