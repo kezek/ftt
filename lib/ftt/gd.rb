@@ -32,16 +32,39 @@ module Ftt
       end
     end
     
+    def self.prepareRow(task, jira, time)
+      @@row = Array[getCurrentDate, Ftt::Config.instance.getUsername, '1111111', task, jira, time, '']        
+    end
+    
     # TODO : finish implementation
-    def self.save
-      @@worksheet[1, 1] = "aaaaaa"
-      @@worksheet[1, 2] = "bbbbbb"
+    def self.save(task, jira, time)
+      #@@worksheet[1, 1] = "aaaaaa"
+      #@@worksheet[1, 2] = "bbbbbb"
+      prepareRow(task, jira, time)
+      rowIndex = getAvailableRowIndex
+      index = -1
+      for col in 1..@@worksheet.num_cols
+        @@worksheet[rowIndex, col] = @@row[index += 1]
+      end
       @@worksheet.save
     end
     
     #fetch current date in format D/M/Y
     def self.getCurrentDate
       Date.today.strftime("%d.%m.%Y")
-    end  
+    end
+    
+    def self.isEntryForCurrentDay?
+      latestDate = @@worksheet[@@worksheet.num_rows, 1]
+      if latestDate == getCurrentDate.to_s
+        return true
+      end
+      
+      false
+    end
+    
+    def self.getAvailableRowIndex
+      @@worksheet.num_rows + 1
+    end
   end
 end

@@ -9,6 +9,15 @@ include Fox
 # Author: Andrei
 # TODO : refactoring !
 
+# adding round_down method to Float class
+class Float
+  def round_down n=0
+  s = self.to_s
+  l = s.index('.') + 1 + n
+  s.length <= l ? self : s[0,l].to_f
+  end
+end
+
 class Gui < FXMainWindow
   
   #class constants
@@ -103,7 +112,7 @@ class Gui < FXMainWindow
     end
     #saveButton
     @saveButton.connect(SEL_COMMAND) do
-      Ftt::GD.save(@taskField.text)
+      Ftt::GD.save(@taskField.text, @jiraField.text,_roundCounterValueToHours)
     end
   end
 
@@ -138,6 +147,24 @@ class Gui < FXMainWindow
     @counterValue += 1
     @counterLabel.text = formatTime(@counterValue)
     @counterButtonTimeout = @app.addTimeout(1000, method(:_onTimerButtonClick))
+  end
+  
+  #rounds @counterValue to hours
+  def _roundCounterValueToHours
+    _temp = @counterValue    
+    #substract hours
+    _h = (_temp / 3600.0).round_down
+    _temp -= _h * 3600
+    #if time left is less then 15min round to 0
+    if _temp <= 900
+      return _h
+    end
+    #if time left is less then 45min round to 0.5
+    if _temp <= 2400
+      return _h + 0.5
+    end
+    # 45 min < time left < 60 min round to 1h
+    return _h + 1    
   end
 
   public
