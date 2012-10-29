@@ -13,9 +13,9 @@ class Gui < FXMainWindow
   
   #class constants
   APP_DEFAULT_WIDTH = 300
-  APP_DEFAULT_HEIGHT = 100
+  APP_DEFAULT_HEIGHT = 130
   HORIZONTAL_FRAME_DEFAULT_WIDTH = 300
-  HORIZAONTAL_FRAME_DEFAULT_HEIGHT = 45
+  HORIZONTAL_FRAME_DEFAULT_HEIGHT = 45
 
   protected
 
@@ -35,10 +35,15 @@ class Gui < FXMainWindow
 
   #create FX widgets
   def _prepareLayout
-    @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => HORIZAONTAL_FRAME_DEFAULT_HEIGHT)
-      @hFrame1Label = FXLabel.new(@hFrame1,"Task:")
-        @hFrame1Label.font = FXFont.new(@app,_createFont())
-      @taskField = FXTextField.new(@hFrame1,30, :opts => LAYOUT_FILL)
+    @jiraFrame = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => HORIZONTAL_FRAME_DEFAULT_HEIGHT)
+      @jiraLabel = FXLabel.new(@jiraFrame,'JIRA:')
+        @jiraLabel.font = FXFont.new(@app,_createFont())
+    @jiraField = FXTextField.new(@jiraFrame, 30, :opts => LAYOUT_FILL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)      
+    
+    @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH)
+      @hFrame1Label = FXLabel.new(@hFrame1, "Task:" , :opts => LAYOUT_FIX_WIDTH, :width => 73)        
+    @taskField = FXTextField.new(@hFrame1, 15, :opts => LAYOUT_FILL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
+    
     @vFrame1 = FXVerticalFrame.new(self, :opts => LAYOUT_FILL)
       @hFrame2 = FXHorizontalFrame.new(@vFrame1)
         @counterButton = FXButton.new(@hFrame2, "Start timer")
