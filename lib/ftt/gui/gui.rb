@@ -112,7 +112,9 @@ class Gui < FXMainWindow
     end
     #saveButton
     @saveButton.connect(SEL_COMMAND) do
-      Ftt::GD.save(@taskField.text, @jiraField.text,_roundCounterValueToHours)
+      if validateSaveAction
+        Ftt::GD.save(@taskField.text, @jiraField.text,_roundCounterValueToHours)
+      end      
     end
   end
 
@@ -187,6 +189,22 @@ class Gui < FXMainWindow
     end
 
     return true
+  end
+  
+  # validate the Save button from the main dialog
+  def validateSaveAction
+    if _roundCounterValueToHours < 0.5
+      FXMessageBox.new(getApp,"Warning","Get some work done first",nil,MBOX_OK).execute
+      return false
+    end
+    if @taskField.text.strip.empty? === true
+      FXMessageBox.new(getApp,"Warning","Task field is empty",nil,MBOX_OK).execute
+      return false
+    end
+    if @jiraField.text.strip.empty? === true
+      FXMessageBox.new(getApp,"Warning","JIRA field is empty",nil,MBOX_OK).execute
+      return false
+    end
   end
 
   # construct the FX app
