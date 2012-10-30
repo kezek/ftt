@@ -1,4 +1,5 @@
 require_relative './db'
+require_relative './models/maconomy'
 require 'singleton'
 require 'digest'
 require 'logger'
@@ -10,8 +11,7 @@ module Ftt
     include Db
     include Singleton
 
-    CONFIG_TABLE = 'config'
-    MACONOMY_TABLE = 'maconomy'
+    CONFIG_TABLE = 'config'    
 
     attr_reader :logger
 
@@ -46,18 +46,10 @@ module Ftt
           Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
                                         'username', data["username"].encode('UTF-8'))
                                 
-          Db.instance.execute("CREATE table if not exists #{MACONOMY_TABLE} (pattern TEXT UNIQUE, code TEXT)")
+          Db.instance.execute("CREATE table if not exists #{Maconomy::MACONOMY_TABLE} (pattern TEXT UNIQUE, code TEXT)")
           #avoid process in case no maconomy code has been changed
           if getMaconomyCodesCombined === nil || data["maconomy"] != getMaconomyCodesCombined   
-            data["maconomy"].each_line do |row|
-              values = row.split(',')
-              #check if there are 2 values
-              if values.count
-                #save pair to maconomy table in db
-                Db.instance.execute("INSERT OR REPLACE INTO #{MACONOMY_TABLE} values ( ?, ? )",
-                                    values.first.encode('UTF-8'),values.last.encode('UTF-8'))
-              end
-            end
+            Maconomy.new.save(data["maconomy"])
             setMaconomyCodesCombined(data['maconomy'])
           end
         rescue => e

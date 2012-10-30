@@ -153,6 +153,8 @@ class Gui < FXMainWindow
   
   #rounds @counterValue to hours
   def _roundCounterValueToHours
+    #DEBUGGING
+    return 1
     _temp = @counterValue    
     #substract hours
     _h = (_temp / 3600.0).round_down

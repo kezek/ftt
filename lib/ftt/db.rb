@@ -1,4 +1,5 @@
 require 'sqlite3'
+
 # Module for conneting with the DB
 #singleton pattern
 module Db
