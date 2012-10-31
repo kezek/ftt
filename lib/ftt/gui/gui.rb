@@ -98,7 +98,8 @@ class Gui < FXMainWindow
       response = @firstTimeMessage.execute
       # if clicked on Yes on @firstTimeMessage
       if response == 1
-        _displaySettingDialog
+        Maconomy.new.save(Maconomy.getDefaultValues)
+        _displaySettingDialog        
       end
     end
 

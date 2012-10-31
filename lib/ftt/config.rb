@@ -46,7 +46,6 @@ module Ftt
           Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
                                         'username', data["username"].encode('UTF-8'))
                                 
-          Db.instance.execute("CREATE table if not exists #{Maconomy::MACONOMY_TABLE} (pattern TEXT UNIQUE, code TEXT)")
           #avoid process in case no maconomy code has been changed
           if getMaconomyCodesCombined === nil || data["maconomy"] != getMaconomyCodesCombined   
             Maconomy.new.save(data["maconomy"])

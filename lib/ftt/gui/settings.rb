@@ -63,7 +63,10 @@ class Settings < FXDialogBox
           maconomyCodes = Ftt::Config.instance.getMaconomyCodesCombined
           unless maconomyCodes.nil? or maconomyCodes == ' ' or maconomyCodes.empty?
             @maconomyData.value = maconomyCodes
-          end      
+          end
+        #if first run then populate with default values
+        else
+          @maconomyData.value =  Maconomy.getDefaultValues
         end
         # render element
         FXText.new(maconomyFrame, @maconomyData, FXDataTarget::ID_VALUE, LAYOUT_FILL_X|LAYOUT_FILL_Y|SELECT_LINES|TEXT_SHOWACTIVE|TEXT_AUTOSCROLL)
