@@ -1,6 +1,6 @@
 require_relative './../config'
 
-class Maconomy  
+class Maconomy
 
   MACONOMY_TABLE = 'maconomy'
 
@@ -27,5 +27,30 @@ eos
     end
     Ftt::Config.instance.setMaconomyCodesCombined(multiLineString)
   end
-
+  
+=begin
+  Returns all table rows as an array
+=end
+  def self.getCollection
+    Db.instance.execute("SELECT * FROM #{MACONOMY_TABLE}")
+  end
+  
+=begin
+  Finds the best maconomy code match for the JIRA entered
+=end
+  def self.match(jiraValue)
+    # row.first = 'CPX,IRD'....
+    # row.last = maconomy code
+    getCollection.each do |row|
+      # search for a dead-on match (ex CPX-127 vs CPX-127)
+      if row.first.strip == jiraValue.strip
+        return row.last
+      end
+    end
+    getCollection.each do |row|
+      if ("#{jiraValue}" =~ /#{row.first}-\d+/) != nil
+        return row.last
+      end
+    end
+  end
 end

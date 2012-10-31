@@ -114,7 +114,7 @@ class Gui < FXMainWindow
     #saveButton
     @saveButton.connect(SEL_COMMAND) do
       if validateSaveAction
-        Ftt::GD.save(@taskField.text, @jiraField.text,_roundCounterValueToHours)
+        Ftt::GD.save(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text))
       end      
     end
   end
@@ -208,6 +208,7 @@ class Gui < FXMainWindow
       FXMessageBox.new(getApp,"Warning","JIRA field is empty",nil,MBOX_OK).execute
       return false
     end
+    return true
   end
 
   # construct the FX app

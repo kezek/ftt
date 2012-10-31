@@ -32,15 +32,15 @@ module Ftt
       end
     end
     
-    def self.prepareRow(task, jira, time)
-      @@row = Array[getCurrentDate, Ftt::Config.instance.getUsername, '1111111', task, jira, time, '']        
+    def self.prepareRow(task, jira, time, maconomy)
+      @@row = Array[getCurrentDate, Ftt::Config.instance.getUsername, maconomy, task, jira, time, '']        
     end
     
     # TODO : finish implementation
-    def self.save(task, jira, time)
+    def self.save(task, jira, time, maconomy)
       #@@worksheet[1, 1] = "aaaaaa"
       #@@worksheet[1, 2] = "bbbbbb"
-      prepareRow(task, jira, time)
+      prepareRow(task, jira, time, maconomy)
       rowIndex = getAvailableRowIndex
       index = -1
       for col in 1..@@worksheet.num_cols
