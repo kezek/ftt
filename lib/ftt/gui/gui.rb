@@ -67,7 +67,8 @@ class Gui < FXMainWindow
         # TODO finish implementantion
         @saveButton = FXButton.new(@hFrame2,"Save")
         # 
-        @counterLabel = FXLabel.new(@hFrame2,formatTime(@counterValue))
+        @counterLabel = FXLabel.new(@hFrame2,formatTime(@counterValue), :opts => FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_X|LAYOUT_FILL_Y)
+          @counterLabel.font = FXFont.new(@app,_createFont('Helvetica', 85, FONTWEIGHT_BOLD))
         @counterLabel.hide
   end
 
