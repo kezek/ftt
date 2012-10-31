@@ -54,6 +54,15 @@ class Settings < FXDialogBox
         #render the field
         @Username = FXTextField.new(vFrame2, 45,
           :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
+        if Ftt::Config.instance.configured? == true
+          # fetch config value
+          username = Ftt::Config.instance.getUsername
+          unless username.nil? or username == ' ' or username.empty?
+            @Username.text = username
+          end
+          # display config value unless empty or nill
+        end
+          
       hFrame2 = FXHorizontalFrame.new(self, :opts => LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT, :height => 250)
         @maconomyData = FXDataTarget.new("")
         maconomyBox = FXGroupBox.new(hFrame2, "Maconomy Codes", GROUPBOX_NORMAL|LAYOUT_FILL_X|LAYOUT_FILL_Y|FRAME_GROOVE)
