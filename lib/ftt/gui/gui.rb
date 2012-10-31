@@ -22,8 +22,8 @@ class Gui < FXMainWindow
   
   #class constants
   APP_DEFAULT_WIDTH = 355
-  APP_DEFAULT_HEIGHT = 130
-  HORIZONTAL_FRAME_DEFAULT_WIDTH = 300
+  APP_DEFAULT_HEIGHT = 240
+  HORIZONTAL_FRAME_DEFAULT_WIDTH = 355
   HORIZONTAL_FRAME_DEFAULT_HEIGHT = 45
 
   protected
@@ -53,6 +53,12 @@ class Gui < FXMainWindow
       @hFrame1Label = FXLabel.new(@hFrame1, "Task:" , :opts => LAYOUT_FIX_WIDTH, :width => 73)        
     @taskField = FXTextField.new(@hFrame1, 15, :opts => LAYOUT_FILL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
     
+    @detailsFrame =  FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => 90)
+      @detailsData = FXDataTarget.new("")
+      @detailsBox = FXGroupBox.new(@detailsFrame, 'Details:', GROUPBOX_NORMAL|LAYOUT_FILL_X|LAYOUT_FILL_Y|FRAME_GROOVE)
+      detailsInsideFrame = FXHorizontalFrame.new(@detailsBox, FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_X|LAYOUT_FILL_Y)
+      FXText.new(detailsInsideFrame, @detailsData, FXDataTarget::ID_VALUE, LAYOUT_FILL_X|LAYOUT_FILL_Y|SELECT_LINES|TEXT_SHOWACTIVE|TEXT_AUTOSCROLL)
+      
     @vFrame1 = FXVerticalFrame.new(self, :opts => LAYOUT_FILL)
       @hFrame2 = FXHorizontalFrame.new(@vFrame1)
         @counterButton = FXButton.new(@hFrame2, "Start timer")
@@ -116,10 +122,10 @@ class Gui < FXMainWindow
       if validateSaveAction
         begin
           #TODO GD.prepareRow gets called twice
-          row = Ftt::GD.prepareRow(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text))
+          row = Ftt::GD.prepareRow(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text), @detailsData.value)
           confirmBox = FXMessageBox.new(getApp,"","The following row will be saved :\n #{row.inspect}",nil,MBOX_YES_NO).execute
           if confirmBox == 1
-            Ftt::GD.save(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text))
+            Ftt::GD.save(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text), @detailsData.value)
             FXMessageBox.new(getApp,"","Success!",nil,MBOX_OK).execute
           end          
         rescue => e
