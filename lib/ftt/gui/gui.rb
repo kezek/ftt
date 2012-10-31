@@ -114,7 +114,17 @@ class Gui < FXMainWindow
     #saveButton
     @saveButton.connect(SEL_COMMAND) do
       if validateSaveAction
-        Ftt::GD.save(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text))
+        begin
+          #TODO GD.prepareRow gets called twice
+          row = Ftt::GD.prepareRow(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text))
+          confirmBox = FXMessageBox.new(getApp,"","The following row will be saved :\n #{row.inspect}",nil,MBOX_YES_NO).execute
+          if confirmBox == 1
+            Ftt::GD.save(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text))
+            FXMessageBox.new(getApp,"","Success!",nil,MBOX_OK).execute
+          end          
+        rescue => e
+          FXMessageBox.new(getApp,"Error",e.message,nil,MBOX_OK).execute
+        end
       end      
     end
   end
