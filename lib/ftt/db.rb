@@ -16,7 +16,6 @@ module Db
 
   protected
   def self.connect
-    puts 'CONNECTED'
     @@db = SQLite3::Database.new(DB_PATH)
   end
 end
