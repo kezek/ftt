@@ -64,9 +64,8 @@ class Gui < FXMainWindow
         @counterButton = FXButton.new(@hFrame2, "Start timer")
         @resetButton = FXButton.new(@hFrame2,"Reset timer")
         @settingsButton = FXButton.new(@hFrame2, "Settings")
-        # TODO finish implementantion
         @saveButton = FXButton.new(@hFrame2,"Save")
-        # 
+   
         @counterLabel = FXLabel.new(@hFrame2,formatTime(@counterValue), :opts => FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_X|LAYOUT_FILL_Y)
           @counterLabel.font = FXFont.new(@app,_createFont('Helvetica', 85, FONTWEIGHT_BOLD))
         @counterLabel.hide
