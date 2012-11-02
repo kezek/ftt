@@ -1,4 +1,5 @@
-require './lib/ftt/gui/gui.rb'
+$:.push File.expand_path(File.dirname(__FILE__) + '/lib')
+require 'ftt'
 
 if __FILE__ == $0
   FXApp.new do |app|
