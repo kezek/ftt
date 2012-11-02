@@ -154,7 +154,7 @@ class Gui < FXMainWindow
     @GDConnectError = GoogleDriveConnectError.new(self)
     @GDSpreadsheetError = GoogleDriveInvalidSpreadsheet.new(self)
     #create the setting dialog and hide it initially
-    @settingsDialog = Settings.new(self)
+    @settingsDialog = Ftt::Settings.new(self)
   end
 
   def _onTimerButtonClick(sender, sel, ptr)
