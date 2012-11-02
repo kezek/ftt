@@ -13,7 +13,7 @@ require 'fox16'
 require 'config'
 require 'gd'
 #gui
-require 'gui'
+require 'main'
 require 'messages'
 require 'settings'
 #models

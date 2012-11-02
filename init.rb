@@ -5,7 +5,8 @@ require 'ftt'
 
 if __FILE__ == $0
   FXApp.new do |app|
-    Gui.new(app)
+    #TODO : boostrap should be another class , not Main
+    Ftt::Main.new(app)
     app.create
     app.run
   end
