@@ -6,7 +6,7 @@ module Ftt
     include Db
     include Singleton
 
-    CONFIG_TABLE = 'config'    
+    CONFIG_TABLE = 'config'
 
     attr_reader :logger
 
@@ -29,20 +29,20 @@ module Ftt
           Db.instance.execute("CREATE table if not exists #{CONFIG_TABLE} (key TEXT UNIQUE, value TEXT)")
 
           Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
-                              'gusername', data["gusername"].encode('UTF-8'))
+          'gusername', data["gusername"].encode('UTF-8'))
 
           Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
-                              'gpassword', data["gpassword"].encode('UTF-8'))
+          'gpassword', data["gpassword"].encode('UTF-8'))
 
           Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
-                              'gspreadsheetkey', data["gspreadsheetkey"].encode('UTF-8'))
-                                
+          'gspreadsheetkey', data["gspreadsheetkey"].encode('UTF-8'))
+
           Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
-                                        'username', data["username"].encode('UTF-8'))
-                                
+          'username', data["username"].encode('UTF-8'))
+
           #avoid process in case no maconomy code has been changed
-          if getMaconomyCodesCombined === nil || data["maconomy"] != getMaconomyCodesCombined   
-            Maconomy.new.save(data["maconomy"])
+          if getMaconomyCodesCombined === nil || data["maconomy"] != getMaconomyCodesCombined
+            Ftt::Maconomy.new.save(data["maconomy"])
             setMaconomyCodesCombined(data['maconomy'])
           end
         rescue => e
@@ -76,7 +76,7 @@ module Ftt
         @logger.error(e.message)
       end
     end
-    
+
     def getMaconomyCodesCombined
       begin
         Db.instance.get_first_value("SELECT value FROM #{CONFIG_TABLE} WHERE key = 'maconomy_codes_combined'")
@@ -84,16 +84,16 @@ module Ftt
         @logger.error(e.message)
       end
     end
-    
+
     def setMaconomyCodesCombined(data)
       begin
         Db.instance.execute("INSERT OR REPLACE INTO #{CONFIG_TABLE} values ( ?, ? )",
-                            'maconomy_codes_combined', data.encode('UTF-8'))
+        'maconomy_codes_combined', data.encode('UTF-8'))
       rescue => e
         @logger.error(e.message)
       end
     end
-    
+
     # Username is the value the will be used to populate the
     # 'User' column in the worksheet
     def getUsername

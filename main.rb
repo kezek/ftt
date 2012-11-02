@@ -1,4 +1,5 @@
 $:.push File.expand_path(File.dirname(__FILE__) + '/lib')
+require 'db'
 require 'ftt'
 
 if __FILE__ == $0

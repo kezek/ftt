@@ -1,8 +1,3 @@
-require 'fox16'
-require_relative '../config'
-require_relative './settings'
-require_relative './messages'
-require_relative '../gd'
 include Fox
 
 # Main Gui bootstrap
@@ -104,7 +99,7 @@ class Gui < FXMainWindow
       response = @firstTimeMessage.execute
       # if clicked on Yes on @firstTimeMessage
       if response == 1
-        Maconomy.new.save(Maconomy.getDefaultValues)
+        Maconomy.new.save(Ftt::Maconomy.getDefaultValues)
         _displaySettingDialog        
       end
     end
@@ -122,10 +117,10 @@ class Gui < FXMainWindow
       if validateSaveAction
         begin
           #TODO GD.prepareRow gets called twice
-          row = Ftt::GD.prepareRow(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text), @detailsData.value)
+          row = Ftt::GD.prepareRow(@taskField.text, @jiraField.text, _roundCounterValueToHours, Ftt::Maconomy.match(@jiraField.text), @detailsData.value)
           confirmBox = FXMessageBox.new(getApp,"","The following row will be saved :\n #{row.inspect}",nil,MBOX_YES_NO).execute
           if confirmBox == 1
-            Ftt::GD.save(@taskField.text, @jiraField.text, _roundCounterValueToHours, Maconomy.match(@jiraField.text), @detailsData.value)
+            Ftt::GD.save(@taskField.text, @jiraField.text, _roundCounterValueToHours, Ftt::Maconomy.match(@jiraField.text), @detailsData.value)
             FXMessageBox.new(getApp,"","Success!",nil,MBOX_OK).execute
           end          
         rescue => e

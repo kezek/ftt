@@ -6,8 +6,10 @@ $:.push File.expand_path(File.dirname(__FILE__) + '/ftt/models')
 require 'digest'
 require 'logger'
 require 'csv'
+require "google_drive"
+require 'date'
+require 'fox16'
 #
-require 'db'
 require 'config'
 require 'gd'
 #gui

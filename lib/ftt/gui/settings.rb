@@ -1,6 +1,3 @@
-require 'fox16'
-include Fox
-
 class Settings < FXDialogBox
 
   attr_reader :GUsername, :GPassword, :GSpreadsheetKey, :maconomyData, :Username
@@ -75,7 +72,7 @@ class Settings < FXDialogBox
           end
         #if first run then populate with default values
         else
-          @maconomyData.value =  Maconomy.getDefaultValues
+          @maconomyData.value =  Ftt::Maconomy.getDefaultValues
         end
         # render element
         FXText.new(maconomyFrame, @maconomyData, FXDataTarget::ID_VALUE, LAYOUT_FILL_X|LAYOUT_FILL_Y|SELECT_LINES|TEXT_SHOWACTIVE|TEXT_AUTOSCROLL)

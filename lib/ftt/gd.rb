@@ -1,6 +1,3 @@
-require "google_drive"
-require 'date'
-
 module Ftt
   class GD
     def self.login
@@ -31,11 +28,11 @@ module Ftt
         raise e
       end
     end
-    
+
     def self.prepareRow(task, jira, time, maconomy, details)
-      @@row = Array[getCurrentDate, Ftt::Config.instance.getUsername, maconomy, task, jira, time, details]        
+      @@row = Array[getCurrentDate, Ftt::Config.instance.getUsername, maconomy, task, jira, time, details]
     end
-    
+
     # TODO : finish implementation
     def self.save(task, jira, time, maconomy, details)
       #@@worksheet[1, 1] = "aaaaaa"
@@ -48,21 +45,21 @@ module Ftt
       end
       @@worksheet.save
     end
-    
+
     #fetch current date in format D/M/Y
     def self.getCurrentDate
       Date.today.strftime("%d.%m.%Y")
     end
-    
+
     def self.isEntryForCurrentDay?
       latestDate = @@worksheet[@@worksheet.num_rows, 1]
       if latestDate == getCurrentDate.to_s
         return true
       end
-      
+
       false
     end
-    
+
     def self.getAvailableRowIndex
       @@worksheet.num_rows + 1
     end
