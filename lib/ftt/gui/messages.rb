@@ -1,3 +1,7 @@
+=begin
+TODO : remove this file entirely and instantiate
+FXMessageBox(es) on the spot
+=end
 class FirstTime < FXMessageBox
   def initialize(owner)
     super(owner, "Yo dude","Seems like you're a first timer. Do you want to configure the app ?",nil,MBOX_YES_NO)
@@ -15,3 +19,4 @@ class GoogleDriveInvalidSpreadsheet < FXMessageBox
     super(owner, "Warning", "Could not retrieve worksheet. Check the spreadsheet key.",nil,MBOX_OK)
   end
 end
+
