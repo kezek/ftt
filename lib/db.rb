@@ -3,7 +3,7 @@ require 'sqlite3'
 # Module for conneting with the DB
 #singleton pattern
 module Db
-  DB_PATH = File.expand_path("../../../data/ftt.db", __FILE__)
+  DB_PATH = File.expand_path("../../data/ftt.db", __FILE__)
 
   public
   def initialize

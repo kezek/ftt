@@ -1,9 +1,4 @@
-require_relative './db'
-require_relative './models/maconomy'
 require 'singleton'
-require 'digest'
-require 'logger'
-require 'csv'
 
 # configuration
 module Ftt
