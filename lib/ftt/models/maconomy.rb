@@ -53,6 +53,8 @@ eos
           return row.last
         end
       end
+      
+      return 'no-match'
     end
   end
 end
