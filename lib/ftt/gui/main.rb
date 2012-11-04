@@ -29,15 +29,15 @@ module Ftt
 
     #create FX widgets
     def _prepareLayout
-      @jiraFrame = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => HORIZONTAL_FRAME_DEFAULT_HEIGHT)
-      @jiraLabel = FXLabel.new(@jiraFrame,'JIRA:')
-      @jiraLabel.font = FXFont.new(@app,_createFont())
-      @jiraField = FXTextField.new(@jiraFrame, 30, :opts => LAYOUT_FILL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
-
-      @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH)
-      @hFrame1Label = FXLabel.new(@hFrame1, "Task:" , :opts => LAYOUT_FIX_WIDTH, :width => 73)
-      @taskField = FXTextField.new(@hFrame1, 15, :opts => LAYOUT_FILL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
-
+      @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH, :width => 340)
+        @vFrame1_1 = FXVerticalFrame.new(@hFrame1)
+          @jiraLabel = FXLabel.new(@vFrame1_1,'JIRA:')
+          @taskLabel = FXLabel.new(@vFrame1_1, "Task:", :padTop => 12 )
+        @vFrame1_2 = FXVerticalFrame.new(@hFrame1)
+          @jiraFrame = FXHorizontalFrame.new(@vFrame1_2)
+          @jiraField = FXTextField.new(@jiraFrame, 45, :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
+          @taskFrame = FXHorizontalFrame.new(@vFrame1_2)
+          @taskField = FXTextField.new(@taskFrame, 45, :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)      
       @detailsFrame =  FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => 90)
       @detailsData = FXDataTarget.new("")
       @detailsBox = FXGroupBox.new(@detailsFrame, 'Details:', GROUPBOX_NORMAL|LAYOUT_FILL_X|LAYOUT_FILL_Y|FRAME_GROOVE)
