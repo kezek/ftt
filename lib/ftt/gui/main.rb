@@ -30,14 +30,14 @@ module Ftt
     #create FX widgets
     def _prepareLayout
       @hFrame1 = FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH, :width => 340)
-        @vFrame1_1 = FXVerticalFrame.new(@hFrame1)
-          @jiraLabel = FXLabel.new(@vFrame1_1,'JIRA:')
-          @taskLabel = FXLabel.new(@vFrame1_1, "Task:", :padTop => 12 )
-        @vFrame1_2 = FXVerticalFrame.new(@hFrame1)
-          @jiraFrame = FXHorizontalFrame.new(@vFrame1_2)
-          @jiraField = FXTextField.new(@jiraFrame, 45, :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
-          @taskFrame = FXHorizontalFrame.new(@vFrame1_2)
-          @taskField = FXTextField.new(@taskFrame, 45, :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)      
+      @vFrame1_1 = FXVerticalFrame.new(@hFrame1)
+      @jiraLabel = FXLabel.new(@vFrame1_1,'JIRA:')
+      @taskLabel = FXLabel.new(@vFrame1_1, "Task:", :padTop => 15 )
+      @vFrame1_2 = FXVerticalFrame.new(@hFrame1)
+      @jiraFrame = FXHorizontalFrame.new(@vFrame1_2)
+      @jiraField = FXTextField.new(@jiraFrame, 45, :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
+      @taskFrame = FXHorizontalFrame.new(@vFrame1_2)
+      @taskField = FXTextField.new(@taskFrame, 45, :opts => LAYOUT_CENTER_Y|LAYOUT_CENTER_X|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FILL_ROW)
       @detailsFrame =  FXHorizontalFrame.new(self, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT ,:width => HORIZONTAL_FRAME_DEFAULT_WIDTH, :height => 90)
       @detailsData = FXDataTarget.new("")
       @detailsBox = FXGroupBox.new(@detailsFrame, 'Details:', GROUPBOX_NORMAL|LAYOUT_FILL_X|LAYOUT_FILL_Y|FRAME_GROOVE)
@@ -93,8 +93,12 @@ module Ftt
         end
       end
 
-      if validateSettings == false
-        _displaySettingDialog
+      #targets the scenario where the user doesnt want to enter settings
+      #on first run
+      if response != nil && response != 2
+        if validateSettings == false
+          _displaySettingDialog
+        end
       end
 
       # display setting dialog when clicking on the Setting Button
@@ -132,8 +136,10 @@ module Ftt
       Ftt::Config.instance.saveConfiguration(data)
       # while current setings are invalid keep displaying
       # the Settings Dialog
-      if validateSettings == false
-        _displaySettingDialog
+      if response == 1
+        if validateSettings == false
+          _displaySettingDialog
+        end
       end
     end
 
@@ -188,7 +194,7 @@ module Ftt
         @GDConnectError.execute
         return false
       end
-
+      FXMessageBox.new(getApp,"","Is good is good!",nil,MBOX_OK).execute
       return true
     end
 

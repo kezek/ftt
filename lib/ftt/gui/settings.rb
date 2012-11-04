@@ -81,6 +81,8 @@ module Ftt
       FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_Y)
       acceptButton.setDefault
       acceptButton.setFocus
+      cancelButton = FXButton.new(hFrame3, "Cancel", nil, self, ID_CANCEL,
+      FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_Y)
       FXLabel.new(hFrame3, "Note : place the current montly worksheet as the first one")
     end
   end
