@@ -76,13 +76,13 @@ module Ftt
       end
       # render element
       FXText.new(maconomyFrame, @maconomyData, FXDataTarget::ID_VALUE, LAYOUT_FILL_X|LAYOUT_FILL_Y|SELECT_LINES|TEXT_SHOWACTIVE|TEXT_AUTOSCROLL)
-      hFrame3 = FXHorizontalFrame.new(self)
+      hFrame3 = FXHorizontalFrame.new(self, :opts=> LAYOUT_FILL_X)
       acceptButton = FXButton.new(hFrame3, "Accept", nil, self, ID_ACCEPT,
       FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_Y)
       acceptButton.setDefault
       acceptButton.setFocus
       cancelButton = FXButton.new(hFrame3, "Cancel", nil, self, ID_CANCEL,
-      FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_Y)
+      FRAME_RAISED|FRAME_THICK|LAYOUT_RIGHT)
       FXLabel.new(hFrame3, "Note : place the current montly worksheet as the first one")
     end
   end
