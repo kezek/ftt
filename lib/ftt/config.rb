@@ -12,7 +12,9 @@ module Ftt
 
     public
     def initialize
+      FileUtils.mkdir_p("../../../data") unless File.exists?("../../../data")
       logFilePath = File.expand_path("../../../data/log.txt", __FILE__)
+      
       file = File.open(logFilePath, File::WRONLY | File::APPEND | File::CREAT)
       @logger = Logger.new(file)
       super
